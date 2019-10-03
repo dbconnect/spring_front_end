@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Spring Demo</title>
+</head>
+
+<body>
+    <h1>Student By Id</h1>
+    <label for="studentId">Enter Id: </label>
+    <input type="number" id="studentId"></input><br>
+    <button onclick=fetchStudent()>Fetch</button>
+    <p id="fetched"></p>
+
+    <script type="text/javascript">
+        function fetchStudent() {
+            var studentId = document.getElementById("studentId").value;
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        let response = this.responseText;
+                        let student = JSON.parse(response);
+                        document.getElementById("fetched").innerHTML = "Id: " + student.id + ", Name: " + student.name;
+
+                    } else if (this.status == 404) {
+                        window.alert("Resource Not Found");
+                    }
+                }
+            }
+
+            xhr.open("GET", "http://localhost:8080/students/get/" + studentId, true);
+            xhr.send();
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Spring Demo</title>
+</head>
+
+<body>
+    <h1>Delete Student</h1>
+    <label for="studentId">Enter Id: </label>
+    <input type="number" id="studentId"></input><br>
+    <button onclick=deleteStudent()>Delete</button>
+
+    <script type="text/javascript">
+        function deleteStudent() {
+            var studentId = document.getElementById("studentId").value;
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        window.alert("Success");
+                    }
+                }
+            }
+
+            xhr.open("DELETE", "http://localhost:8080/students/delete/" + studentId, true);
+            xhr.send();
+        }
+
+    </script>
+</body>
+
+</html>

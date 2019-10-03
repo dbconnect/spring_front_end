@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Spring Demo</title>
+</head>
+
+<body>
+    <h1>Update Student</h1>
+    <label for="studentId">Enter Id: </label>
+    <input type="number" id="studentId"></input><br>
+
+    <label for="studentName">Enter Name: </label>
+    <input type="text" id="studentName"></input><br>
+
+    <button onclick=updateStudent()>Update</button>
+
+    <script type="text/javascript">
+        function updateStudent() {
+            var studentId = document.getElementById("studentId").value;
+            var studentName = document.getElementById("studentName").value;
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        let response = this.responseText;
+                        let student = JSON.parse(response);
+                        window.alert("Id: " + student.id + ", Name: " + student.name);
+
+                    } else if (this.status == 404) {
+                        window.alert("Resource Not Found");
+                    }
+                }
+            }
+
+            xhr.open("PUT", "http://localhost:8080/students/update", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({ "id": studentId, "name": studentName }));
+        }
+
+    </script>
+</body>
+
+</html>

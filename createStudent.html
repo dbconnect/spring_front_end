@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Spring Demo</title>
+</head>
+
+<body>
+    <h1>Create Student</h1>
+
+    <label for="studentName">Enter Name: </label>
+    <input type="text" id="studentName"></input><br>
+
+    <button onclick=createStudent()>Create</button>
+
+    <script type="text/javascript">
+        function createStudent() {
+            var studentName = document.getElementById("studentName").value;
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        let response = this.responseText;
+                        let student = JSON.parse(response);
+                        window.alert("Id: " + student.id + ", Name: " + student.name);
+
+                    } else if (this.status == 404) {
+                        window.alert("Resource Not Found");
+                    }
+                }
+            }
+
+            xhr.open("POST", "http://localhost:8080/students/create", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({ "name": studentName }));
+        }
+
+    </script>
+</body>
+
+</html>
