@@ -20,6 +20,8 @@
                 if (this.readyState == 4) {
                     if (this.status == 200) {
                         window.alert("Success");
+                    } else if (this.status == 404) {
+                        window.alert("Resource Not Found");
                     }
                 }
             }
